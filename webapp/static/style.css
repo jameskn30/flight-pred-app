@@ -1,0 +1,25 @@
+.intro {
+    background-color: yellow;
+}
+
+.app-container {
+    display: flex;
+    width: 100%;
+    /* Change this to the desired width of the container */
+}
+
+.left-half,
+.right-half {
+    flex: 1;
+    /* This makes both halves take up equal space */
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.left-half {
+    background-color: #ffffff;
+}
+
+.right-half {
+    background-color: rgb(245, 244, 244);
+}

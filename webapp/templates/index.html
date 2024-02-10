@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h1> Flight Delay Predictor </h1>
+
+        <div class="app-container">
+            <div class="left-half">
+                <h3>Flight Information</h3>
+
+                <form action="{{ url_for('submit_data') }}" method="post">
+                    <div class="form-select">
+                        <label for="airline">Airline</label>
+                        <select class="form-select" name='airline' aria-label="Default select example">
+                            <option value="9E">Endeavor Air</option>
+                            <option value="AA">American Airline</option>
+                            <option value="AQ">Aloha Airline</option>
+                            <option value="AS">Alaska Airline</option>
+                            <option value="B6">Jetblue</option>
+                            <option value="CO">Continental Airlines</option>
+                            <option value="DL">Delta Airlines</option>
+                            <option value="EV">EVA Air</option>
+                            <option value="F9">Frontier Airlines</option>
+                            <option value="FL">Fly Lili</option>
+                            <option value="HA">Hawaiian Airlines</option>
+                            <option value="MQ">Envoy Air</option>
+                            <option value="NW">Northwest Airlines</option>
+                            <option value="OH">PSA Airlines</option>
+                            <option value="OO">Skywest Airlines</option>
+                            <option value="UA">United Airlines</option>
+                            <option value="WN">Southwest Airlines</option>
+                            <option value="XE">JetSuiteX</option>
+                            <option value="YV">MESA Airline</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Departure Date</label>
+                        <input name='date' type='date' class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="dep_time">Departure Time</label>
+                        <input name="dep_time" type='time' class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="arr_time">Arrival Time</label>
+                        <input name='arr_time' type='time' class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="origin_airport">Departure Airport</label>
+                        <select class="form-select" name='origin_airport' aria-label="Default select example">
+                            <option value="PVD">THEODORE FRANCIS GREEN STATE</option>
+                            <option value="FLL">FORT LAUDERDALE HOLLYWOOD INTERNATIONAL</option>
+                            <option value="ORD">CHICAGO OHARE INTERNATIONAL</option>
+                            <option value="OGG">KAHULUI</option>
+                            <option value="PBI">PALM BEACH INTERNATIONAL</option>
+                            <option value="RDU">RALEIGH DURHAM INTERNATIONAL</option>
+                            <option value="BGR">BANGOR INTERNATIONAL</option>
+                            <option value="BQK">N/A</option>
+                            <option value="SMF">SACRAMENTO INTERNATIONAL</option>
+                            <option value="IPL">IMPERIAL CO</option>
+                            <option value="DLH">DULUTH INTERNATIONAL</option>
+                            <option value="TUS">TUCSON INTERNATIONAL</option>
+                            <option value="ALB">ALBANY INTERNATIONAL</option>
+                            <option value="ACK">NANTUCKET MEM</option>
+                            <option value="SLC">SALT LAKE CITY INTERNATIONAL</option>
+                            <option value="CMH">PORT COLUMBUS INTERNATIONAL</option>
+                            <option value="FAI">FAIRBANKS INTERNATIONAL</option>
+                            <option value="BOI">BOISE AIR TERMINAL</option>
+                            <option value="SAN">SAN DIEGO INTERNATIONAL LINDBERGH FLD</option>
+                            <option value="ORF">NORFOLK INTERNATIONAL</option>
+                            <option value="BNA">NASHVILLE INTERNATIONAL</option>
+                            <option value="LIT">ADAMS FLD</option>
+                            <option value="MLU">MONROE RGNL</option>
+                            <option value="LAX">LOS ANGELES INTERNATIONAL</option>
+                            <option value="OAK">METROPOLITAN OAKLAND INTERNATIONAL</option>
+                            <option value="DFW">DALLAS FORT WORTH INTERNATIONAL</option>
+                            <option value="AEX">ALEXANDRIA INTERNATIONAL</option>
+                            <option value="ABQ">ALBUQUERQUE INTERNATIONAL SUNPORT</option>
+                            <option value="CIC">CHICO MUNI</option>
+                            <option value="LCH">LAKE CHARLES RGNL</option>
+                            <option value="RIC">RICHMOND INTERNATIONAL</option>
+                            <option value="TXK">TEXARKANA RGNL WEBB FLD</option>
+                            <option value="IAD">WASHINGTON DULLES INTERNATIONAL</option>
+                            <option value="GTF">GREAT FALLS INTERNATIONAL</option>
+                            <option value="MSN">DANE CO RGNL TRUAX FLD</option>
+                            <option value="ISP">LONG ISLAND MAC ARTHUR</option>
+                            <option value="LBB">LUBBOCK INTERNATIONAL</option>
+                            <option value="SYR">SYRACUSE HANCOCK INTERNATIONAL</option>
+                            <option value="CLL">EASTERWOOD FLD</option>
+                            <option value="ICT">WICHITA MID CONTINENT</option>
+                            <option value="BWI">BALTIMORE WASHINGTON INTERNATIONAL</option>
+                            <option value="SJT">SAN ANGELO RGNL MATHIS FLD</option>
+                            <option value="SAV">SAVANNAH HILTON HEAD INTERNATIONAL</option>
+                            <option value="STL">LAMBERT ST LOUIS INTERNATIONAL</option>
+                            <option value="MFE">MC ALLEN MILLER INTERNATIONAL</option>
+                            <option value="STT">CYRIL E KING</option>
+                            <option value="MOD">MODESTO CITY CO HARRY SHAM</option>
+                            <option value="IAH">GEORGE BUSH INTCNTL HOUSTON</option>
+                            <option value="ROW">ROSWELL INDUSTRIAL AIR CENTER</option>
+                            <option value="SJC">NORMAN Y MINETA SAN JOSE INTERNATIONAL</option>
+                            <option value="CVG">CINCINNATI NORTHERN KENTUCKY INTERNATIONAL</option>
+                            <option value="CRP">CORPUS CHRISTI INTERNATIONAL</option>
+                            <option value="YUM">YUMA MCAS YUMA INTERNATIONAL</option>
+                            <option value="AKN">KING SALMON</option>
+                            <option value="PHX">PHOENIX SKY HARBOR INTERNATIONAL</option>
+                            <option value="TPA">TAMPA INTERNATIONAL</option>
+                            <option value="JFK">JOHN F KENNEDY INTERNATIONAL</option>
+                            <option value="SNA">JOHN WAYNE ARPT ORANGE CO</option>
+                            <option value="BOS">GENERAL EDWARD LAWRENCE LOGAN INTERNATIONAL</option>
+                            <option value="PIT">PITTSBURGH INTERNATIONAL</option>
+                            <option value="DRO">DURANGO LA PLATA CO</option>
+                            <option value="ABI">ABILENE RGNL</option>
+                            <option value="SJU">LUIS MUNOZ MARIN INTERNATIONAL</option>
+                            <option value="ITO">HILO INTERNATIONAL</option>
+                            <option value="GRB">AUSTIN STRAUBEL INTERNATIONAL</option>
+                            <option value="LAN">CAPITAL CITY</option>
+                            <option value="PSE">MERCEDITA</option>
+                            <option value="MCN">MIDDLE GEORGIA RGNL</option>
+                            <option value="STX">HENRY E ROHLSEN</option>
+                            <option value="OMA">EPPLEY AFLD</option>
+                            <option value="AUS">AUSTIN BERGSTROM INTERNATIONAL</option>
+                            <option value="LGA">LA GUARDIA</option>
+                            <option value="BUF">BUFFALO NIAGARA INTERNATIONAL</option>
+                            <option value="BRW">WILEY POST WILL ROGERS MEM</option>
+                            <option value="ADQ">KODIAK</option>
+                            <option value="JNU">JUNEAU INTERNATIONAL</option>
+                            <option value="GFK">GRAND FORKS INTERNATIONAL</option>
+                            <option value="VPS">EGLIN AFB</option>
+                            <option value="LAS">MC CARRAN INTERNATIONAL</option>
+                            <option value="CHA">LOVELL FLD</option>
+                            <option value="SCC">DEADHORSE</option>
+                            <option value="BPT">SOUTHEAST TEXAS RGNL</option>
+                            <option value="YAK">YAKUTAT</option>
+                            <option value="DAY">JAMES M COX DAYTON INTERNATIONAL</option>
+                            <option value="TYS">MC GHEE TYSON</option>
+                            <option value="MCO">ORLANDO INTERNATIONAL</option>
+                            <option value="TLH">TALLAHASSEE RGNL</option>
+                            <option value="DSM">DES MOINES INTERNATIONAL</option>
+                            <option value="MIA">MIAMI INTERNATIONAL</option>
+                            <option value="MDT">HARRISBURG INTERNATIONAL</option>
+                            <option value="BTR">BATON ROUGE METRO RYAN FLD</option>
+                            <option value="JAX">JACKSONVILLE INTERNATIONAL</option>
+                            <option value="SFO">SAN FRANCISCO INTERNATIONAL</option>
+                            <option value="BHM">BIRMINGHAM INTERNATIONAL</option>
+                            <option value="PSP">PALM SPRINGS INTERNATIONAL</option>
+                            <option value="DCA">RONALD REAGAN WASHINGTON NATIONAL</option>
+                            <option value="GNV">GAINESVILLE RGNL</option>
+                            <option value="ACT">WACO RGNL</option>
+                            <option value="SHV">SHREVEPORT RGNL</option>
+                            <option value="DHN">DOTHAN RGNL</option>
+                            <option value="TYR">TYLER POUNDS RGNL</option>
+                            <option value="SWF">STEWART INTERNATIONAL</option>
+                            <option value="ONT">ONTARIO INTERNATIONAL</option>
+                            <option value="DEN">DENVER INTERNATIONAL</option>
+                            <option value="CLE">CLEVELAND HOPKINS INTERNATIONAL</option>
+                            <option value="FSM">FORT SMITH RGNL</option>
+                            <option value="PNS">PENSACOLA RGNL</option>
+                            <option value="BRO">BROWNSVILLE SOUTH PADRE ISLAND INTERNATIONAL</option>
+                            <option value="PUB">PUEBLO MEM</option>
+                            <option value="ROC">GREATER ROCHESTER INTERNATIONAL</option>
+                            <option value="BDL">BRADLEY INTERNATIONAL</option>
+                            <option value="MOB">MOBILE RGNL</option>
+                            <option value="LFT">LAFAYETTE RGNL</option>
+                            <option value="LIH">LIHUE</option>
+                            <option value="PWM">PORTLAND INTERNATIONAL JETPORT</option>
+                            <option value="ANC">TED STEVENS ANCHORAGE INTERNATIONAL</option>
+                            <option value="DTW">DETROIT METRO WAYNE CO</option>
+                            <option value="GEG">SPOKANE INTERNATIONAL</option>
+                            <option value="MOT">MINOT INTERNATIONAL</option>
+                            <option value="PHF">NEWPORT NEWS WILLIAMSBURG INTERNATIONAL</option>
+                            <option value="SIT">SITKA ROCKY GUTIERREZ</option>
+                            <option value="ABY">N/A</option>
+                            <option value="MSP">MINNEAPOLIS ST PAUL INTERNATIONAL</option>
+                            <option value="SPS">SHEPPARD AFB WICHITA FALLS MUNI</option>
+                            <option value="JAN">JACKSON INTERNATIONAL</option>
+                            <option value="ELP">EL PASO INTERNATIONAL</option>
+                            <option value="ATL">THE WILLIAM B HARTSFIELD ATLANTA INTERNATIONAL</option>
+                            <option value="MKE">GENERAL MITCHELL INTERNATIONAL</option>
+                            <option value="OTZ">RALPH WIEN MEM</option>
+                            <option value="LRD">LAREDO INTERNATIONAL</option>
+                            <option value="HPN">WESTCHESTER CO</option>
+                            <option value="EYW">KEY WEST INTERNATIONAL</option>
+                            <option value="CYS">CHEYENNE</option>
+                            <option value="EWR">NEWARK LIBERTY INTERNATIONAL</option>
+                            <option value="BQN">RAFAEL HERNANDEZ</option>
+                            <option value="DAL">DALLAS LOVE FLD</option>
+                            <option value="RNO">RENO TAHOE INTERNATIONAL</option>
+                            <option value="AMA">AMARILLO INTERNATIONAL</option>
+                            <option value="RSW">SOUTHWEST FLORIDA INTERNATIONAL</option>
+                            <option value="HRL">VALLEY INTERNATIONAL</option>
+                            <option value="PMD">PALMDALE PROD FLT TEST INSTL AF PLT 42</option>
+                            <option value="HLN">HELENA RGNL</option>
+                            <option value="MDW">CHICAGO MIDWAY INTERNATIONAL</option>
+                            <option value="PDX">PORTLAND INTERNATIONAL</option>
+                            <option value="TUL">TULSA INTERNATIONAL</option>
+                            <option value="FLO">FLORENCE RGNL</option>
+                            <option value="CPR">NATRONA CO INTERNATIONAL</option>
+                            <option value="MEM">MEMPHIS INTERNATIONAL</option>
+                            <option value="CDC">CEDAR CITY RGNL</option>
+                            <option value="ACY">ATLANTIC CITY INTERNATIONAL</option>
+                            <option value="LNK">LINCOLN MUNI</option>
+                            <option value="CDV">MERLE K MUDHOLE SMITH</option>
+                            <option value="MAF">MIDLAND INTERNATIONAL</option>
+                            <option value="FAT">FRESNO YOSEMITE INTERNATIONAL</option>
+                            <option value="MLB">MELBOURNE INTERNATIONAL</option>
+                            <option value="HNL">HONOLULU INTERNATIONAL</option>
+                            <option value="OME">NOME</option>
+                            <option value="SUX">SIOUX GATEWAY COL BUD DAY FLD</option>
+                            <option value="HOU">WILLIAM P HOBBY</option>
+                            <option value="SAT">SAN ANTONIO INTERNATIONAL</option>
+                            <option value="GGG">EAST TEXAS RGNL</option>
+                            <option value="INL">FALLS INTERNATIONAL</option>
+                            <option value="MCI">KANSAS CITY INTERNATIONAL</option>
+                            <option value="OKC">WILL ROGERS WORLD</option>
+                            <option value="KOA">KONA INTERNATIONAL AT KEAHOLE</option>
+                            <option value="DLG">DILLINGHAM</option>
+                            <option value="IND">INDIANAPOLIS INTERNATIONAL</option>
+                            <option value="ADK">ADAK</option>
+                            <option value="EWN">CRAVEN CO RGNL</option>
+                            <option value="PHL">PHILADELPHIA INTERNATIONAL</option>
+                            <option value="SEA">SEATTLE TACOMA INTERNATIONAL</option>
+                            <option value="LGB">LONG BEACH</option>
+                            <option value="COS">CITY OF COLORADO SPRINGS MUNI</option>
+                            <option value="KTN">KETCHIKAN INTERNATIONAL</option>
+                            <option value="AGS">AUGUSTA RGNL AT BUSH FLD</option>
+                            <option value="CAE">COLUMBIA METROPOLITAN</option>
+                            <option value="MYR">MYRTLE BEACH INTERNATIONAL</option>
+                            <option value="ILM">WILMINGTON INTERNATIONAL</option>
+                            <option value="CHS">CHARLESTON AFB INTERNATIONAL</option>
+                            <option value="GRR">GERALD R FORD INTERNATIONAL</option>
+                            <option value="BTV">BURLINGTON INTERNATIONAL</option>
+                            <option value="MSY">LOUIS ARMSTRONG NEW ORLEANS INTERNATIONAL</option>
+                            <option value="GRK">ROBERT GRAY AAF</option>
+                            <option value="BUR">BURBANK GLENDALE PASADENA</option>
+                            <option value="BET">BETHEL</option>
+                            <option value="BFL">MEADOWS FLD</option>
+                            <option value="BLI">BELLINGHAM INTERNATIONAL</option>
+                            <option value="CLT">CHARLOTTE DOUGLAS INTERNATIONAL</option>
+                            <option value="MQT">SAWYER INTERNATIONAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dest_airport">Arrival Airport</label>
+                        <select class="form-select" name='dest_airport' aria-label="Default select example">
+                            <option value="PVD">THEODORE FRANCIS GREEN STATE</option>
+                            <option value="FLL">FORT LAUDERDALE HOLLYWOOD INTERNATIONAL</option>
+                            <option value="ORD">CHICAGO OHARE INTERNATIONAL</option>
+                            <option value="OGG">KAHULUI</option>
+                            <option value="PBI">PALM BEACH INTERNATIONAL</option>
+                            <option value="RDU">RALEIGH DURHAM INTERNATIONAL</option>
+                            <option value="BGR">BANGOR INTERNATIONAL</option>
+                            <option value="BQK">N/A</option>
+                            <option value="SMF">SACRAMENTO INTERNATIONAL</option>
+                            <option value="IPL">IMPERIAL CO</option>
+                            <option value="DLH">DULUTH INTERNATIONAL</option>
+                            <option value="TUS">TUCSON INTERNATIONAL</option>
+                            <option value="ALB">ALBANY INTERNATIONAL</option>
+                            <option value="ACK">NANTUCKET MEM</option>
+                            <option value="SLC">SALT LAKE CITY INTERNATIONAL</option>
+                            <option value="CMH">PORT COLUMBUS INTERNATIONAL</option>
+                            <option value="FAI">FAIRBANKS INTERNATIONAL</option>
+                            <option value="BOI">BOISE AIR TERMINAL</option>
+                            <option value="SAN">SAN DIEGO INTERNATIONAL LINDBERGH FLD</option>
+                            <option value="ORF">NORFOLK INTERNATIONAL</option>
+                            <option value="BNA">NASHVILLE INTERNATIONAL</option>
+                            <option value="LIT">ADAMS FLD</option>
+                            <option value="MLU">MONROE RGNL</option>
+                            <option value="LAX">LOS ANGELES INTERNATIONAL</option>
+                            <option value="OAK">METROPOLITAN OAKLAND INTERNATIONAL</option>
+                            <option value="DFW">DALLAS FORT WORTH INTERNATIONAL</option>
+                            <option value="AEX">ALEXANDRIA INTERNATIONAL</option>
+                            <option value="ABQ">ALBUQUERQUE INTERNATIONAL SUNPORT</option>
+                            <option value="CIC">CHICO MUNI</option>
+                            <option value="LCH">LAKE CHARLES RGNL</option>
+                            <option value="RIC">RICHMOND INTERNATIONAL</option>
+                            <option value="TXK">TEXARKANA RGNL WEBB FLD</option>
+                            <option value="IAD">WASHINGTON DULLES INTERNATIONAL</option>
+                            <option value="GTF">GREAT FALLS INTERNATIONAL</option>
+                            <option value="MSN">DANE CO RGNL TRUAX FLD</option>
+                            <option value="ISP">LONG ISLAND MAC ARTHUR</option>
+                            <option value="LBB">LUBBOCK INTERNATIONAL</option>
+                            <option value="SYR">SYRACUSE HANCOCK INTERNATIONAL</option>
+                            <option value="CLL">EASTERWOOD FLD</option>
+                            <option value="ICT">WICHITA MID CONTINENT</option>
+                            <option value="BWI">BALTIMORE WASHINGTON INTERNATIONAL</option>
+                            <option value="SJT">SAN ANGELO RGNL MATHIS FLD</option>
+                            <option value="SAV">SAVANNAH HILTON HEAD INTERNATIONAL</option>
+                            <option value="STL">LAMBERT ST LOUIS INTERNATIONAL</option>
+                            <option value="MFE">MC ALLEN MILLER INTERNATIONAL</option>
+                            <option value="STT">CYRIL E KING</option>
+                            <option value="MOD">MODESTO CITY CO HARRY SHAM</option>
+                            <option value="IAH">GEORGE BUSH INTCNTL HOUSTON</option>
+                            <option value="ROW">ROSWELL INDUSTRIAL AIR CENTER</option>
+                            <option value="SJC">NORMAN Y MINETA SAN JOSE INTERNATIONAL</option>
+                            <option value="CVG">CINCINNATI NORTHERN KENTUCKY INTERNATIONAL</option>
+                            <option value="CRP">CORPUS CHRISTI INTERNATIONAL</option>
+                            <option value="YUM">YUMA MCAS YUMA INTERNATIONAL</option>
+                            <option value="AKN">KING SALMON</option>
+                            <option value="PHX">PHOENIX SKY HARBOR INTERNATIONAL</option>
+                            <option value="TPA">TAMPA INTERNATIONAL</option>
+                            <option value="JFK">JOHN F KENNEDY INTERNATIONAL</option>
+                            <option value="SNA">JOHN WAYNE ARPT ORANGE CO</option>
+                            <option value="BOS">GENERAL EDWARD LAWRENCE LOGAN INTERNATIONAL</option>
+                            <option value="PIT">PITTSBURGH INTERNATIONAL</option>
+                            <option value="DRO">DURANGO LA PLATA CO</option>
+                            <option value="ABI">ABILENE RGNL</option>
+                            <option value="SJU">LUIS MUNOZ MARIN INTERNATIONAL</option>
+                            <option value="ITO">HILO INTERNATIONAL</option>
+                            <option value="GRB">AUSTIN STRAUBEL INTERNATIONAL</option>
+                            <option value="LAN">CAPITAL CITY</option>
+                            <option value="PSE">MERCEDITA</option>
+                            <option value="MCN">MIDDLE GEORGIA RGNL</option>
+                            <option value="STX">HENRY E ROHLSEN</option>
+                            <option value="OMA">EPPLEY AFLD</option>
+                            <option value="AUS">AUSTIN BERGSTROM INTERNATIONAL</option>
+                            <option value="LGA">LA GUARDIA</option>
+                            <option value="BUF">BUFFALO NIAGARA INTERNATIONAL</option>
+                            <option value="BRW">WILEY POST WILL ROGERS MEM</option>
+                            <option value="ADQ">KODIAK</option>
+                            <option value="JNU">JUNEAU INTERNATIONAL</option>
+                            <option value="GFK">GRAND FORKS INTERNATIONAL</option>
+                            <option value="VPS">EGLIN AFB</option>
+                            <option value="LAS">MC CARRAN INTERNATIONAL</option>
+                            <option value="CHA">LOVELL FLD</option>
+                            <option value="SCC">DEADHORSE</option>
+                            <option value="BPT">SOUTHEAST TEXAS RGNL</option>
+                            <option value="YAK">YAKUTAT</option>
+                            <option value="DAY">JAMES M COX DAYTON INTERNATIONAL</option>
+                            <option value="TYS">MC GHEE TYSON</option>
+                            <option value="MCO">ORLANDO INTERNATIONAL</option>
+                            <option value="TLH">TALLAHASSEE RGNL</option>
+                            <option value="DSM">DES MOINES INTERNATIONAL</option>
+                            <option value="MIA">MIAMI INTERNATIONAL</option>
+                            <option value="MDT">HARRISBURG INTERNATIONAL</option>
+                            <option value="BTR">BATON ROUGE METRO RYAN FLD</option>
+                            <option value="JAX">JACKSONVILLE INTERNATIONAL</option>
+                            <option value="SFO">SAN FRANCISCO INTERNATIONAL</option>
+                            <option value="BHM">BIRMINGHAM INTERNATIONAL</option>
+                            <option value="PSP">PALM SPRINGS INTERNATIONAL</option>
+                            <option value="DCA">RONALD REAGAN WASHINGTON NATIONAL</option>
+                            <option value="GNV">GAINESVILLE RGNL</option>
+                            <option value="ACT">WACO RGNL</option>
+                            <option value="SHV">SHREVEPORT RGNL</option>
+                            <option value="DHN">DOTHAN RGNL</option>
+                            <option value="TYR">TYLER POUNDS RGNL</option>
+                            <option value="SWF">STEWART INTERNATIONAL</option>
+                            <option value="ONT">ONTARIO INTERNATIONAL</option>
+                            <option value="DEN">DENVER INTERNATIONAL</option>
+                            <option value="CLE">CLEVELAND HOPKINS INTERNATIONAL</option>
+                            <option value="FSM">FORT SMITH RGNL</option>
+                            <option value="PNS">PENSACOLA RGNL</option>
+                            <option value="BRO">BROWNSVILLE SOUTH PADRE ISLAND INTERNATIONAL</option>
+                            <option value="PUB">PUEBLO MEM</option>
+                            <option value="ROC">GREATER ROCHESTER INTERNATIONAL</option>
+                            <option value="BDL">BRADLEY INTERNATIONAL</option>
+                            <option value="MOB">MOBILE RGNL</option>
+                            <option value="LFT">LAFAYETTE RGNL</option>
+                            <option value="LIH">LIHUE</option>
+                            <option value="PWM">PORTLAND INTERNATIONAL JETPORT</option>
+                            <option value="ANC">TED STEVENS ANCHORAGE INTERNATIONAL</option>
+                            <option value="DTW">DETROIT METRO WAYNE CO</option>
+                            <option value="GEG">SPOKANE INTERNATIONAL</option>
+                            <option value="MOT">MINOT INTERNATIONAL</option>
+                            <option value="PHF">NEWPORT NEWS WILLIAMSBURG INTERNATIONAL</option>
+                            <option value="SIT">SITKA ROCKY GUTIERREZ</option>
+                            <option value="ABY">N/A</option>
+                            <option value="MSP">MINNEAPOLIS ST PAUL INTERNATIONAL</option>
+                            <option value="SPS">SHEPPARD AFB WICHITA FALLS MUNI</option>
+                            <option value="JAN">JACKSON INTERNATIONAL</option>
+                            <option value="ELP">EL PASO INTERNATIONAL</option>
+                            <option value="ATL">THE WILLIAM B HARTSFIELD ATLANTA INTERNATIONAL</option>
+                            <option value="MKE">GENERAL MITCHELL INTERNATIONAL</option>
+                            <option value="OTZ">RALPH WIEN MEM</option>
+                            <option value="LRD">LAREDO INTERNATIONAL</option>
+                            <option value="HPN">WESTCHESTER CO</option>
+                            <option value="EYW">KEY WEST INTERNATIONAL</option>
+                            <option value="CYS">CHEYENNE</option>
+                            <option value="EWR">NEWARK LIBERTY INTERNATIONAL</option>
+                            <option value="BQN">RAFAEL HERNANDEZ</option>
+                            <option value="DAL">DALLAS LOVE FLD</option>
+                            <option value="RNO">RENO TAHOE INTERNATIONAL</option>
+                            <option value="AMA">AMARILLO INTERNATIONAL</option>
+                            <option value="RSW">SOUTHWEST FLORIDA INTERNATIONAL</option>
+                            <option value="HRL">VALLEY INTERNATIONAL</option>
+                            <option value="PMD">PALMDALE PROD FLT TEST INSTL AF PLT 42</option>
+                            <option value="HLN">HELENA RGNL</option>
+                            <option value="MDW">CHICAGO MIDWAY INTERNATIONAL</option>
+                            <option value="PDX">PORTLAND INTERNATIONAL</option>
+                            <option value="TUL">TULSA INTERNATIONAL</option>
+                            <option value="FLO">FLORENCE RGNL</option>
+                            <option value="CPR">NATRONA CO INTERNATIONAL</option>
+                            <option value="MEM">MEMPHIS INTERNATIONAL</option>
+                            <option value="CDC">CEDAR CITY RGNL</option>
+                            <option value="ACY">ATLANTIC CITY INTERNATIONAL</option>
+                            <option value="LNK">LINCOLN MUNI</option>
+                            <option value="CDV">MERLE K MUDHOLE SMITH</option>
+                            <option value="MAF">MIDLAND INTERNATIONAL</option>
+                            <option value="FAT">FRESNO YOSEMITE INTERNATIONAL</option>
+                            <option value="MLB">MELBOURNE INTERNATIONAL</option>
+                            <option value="HNL">HONOLULU INTERNATIONAL</option>
+                            <option value="OME">NOME</option>
+                            <option value="SUX">SIOUX GATEWAY COL BUD DAY FLD</option>
+                            <option value="HOU">WILLIAM P HOBBY</option>
+                            <option value="SAT">SAN ANTONIO INTERNATIONAL</option>
+                            <option value="GGG">EAST TEXAS RGNL</option>
+                            <option value="INL">FALLS INTERNATIONAL</option>
+                            <option value="MCI">KANSAS CITY INTERNATIONAL</option>
+                            <option value="OKC">WILL ROGERS WORLD</option>
+                            <option value="KOA">KONA INTERNATIONAL AT KEAHOLE</option>
+                            <option value="DLG">DILLINGHAM</option>
+                            <option value="IND">INDIANAPOLIS INTERNATIONAL</option>
+                            <option value="ADK">ADAK</option>
+                            <option value="EWN">CRAVEN CO RGNL</option>
+                            <option value="PHL">PHILADELPHIA INTERNATIONAL</option>
+                            <option value="SEA">SEATTLE TACOMA INTERNATIONAL</option>
+                            <option value="LGB">LONG BEACH</option>
+                            <option value="COS">CITY OF COLORADO SPRINGS MUNI</option>
+                            <option value="KTN">KETCHIKAN INTERNATIONAL</option>
+                            <option value="AGS">AUGUSTA RGNL AT BUSH FLD</option>
+                            <option value="CAE">COLUMBIA METROPOLITAN</option>
+                            <option value="MYR">MYRTLE BEACH INTERNATIONAL</option>
+                            <option value="ILM">WILMINGTON INTERNATIONAL</option>
+                            <option value="CHS">CHARLESTON AFB INTERNATIONAL</option>
+                            <option value="GRR">GERALD R FORD INTERNATIONAL</option>
+                            <option value="BTV">BURLINGTON INTERNATIONAL</option>
+                            <option value="MSY">LOUIS ARMSTRONG NEW ORLEANS INTERNATIONAL</option>
+                            <option value="GRK">ROBERT GRAY AAF</option>
+                            <option value="BUR">BURBANK GLENDALE PASADENA</option>
+                            <option value="BET">BETHEL</option>
+                            <option value="BFL">MEADOWS FLD</option>
+                            <option value="BLI">BELLINGHAM INTERNATIONAL</option>
+                            <option value="CLT">CHARLOTTE DOUGLAS INTERNATIONAL</option>
+                            <option value="MQT">SAWYER INTERNATIONAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="distance">Distance</label>
+                        <input name='distance' class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </form>
+
+            </div>
+            <div class="right-half">
+                <p>Probability of delayed</p>
+                <div>
+                    <h1 style="font-size: 100px; color: red">{{ delayed_prob }}%</h1>
+                </div>
+                <div>
+                    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="delayedByMonth" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="delayedByAirlines" style="width:100%;max-width:600px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const xValues = [
+            "Day Of Month",
+            "Day Of Week",
+            "Month",
+            "Arrival Time",
+            "Departure Time",
+            "Elapsed Time",
+            "Distance",
+            "Airline"
+        ]
+
+        const yValues = [
+            "0.278233",
+            "0.143575",
+            "0.114231",
+            "0.105215",
+            "0.096751",
+            "0.073628",
+            "0.037953",
+            "0.029964"
+        ]
+        const barColors = ["red", "green", "blue", "orange", "brown", 'gray', 'purple'];
+
+        new Chart("myChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Important factors according to our analysis"
+                }
+            }
+        });
+        //delayed by month line plot
+
+        const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        const delayedCount = [63772,64688,71027,53746,50315,68057,60125,53918,29954,32059,32224,75627]
+
+        new Chart("delayedByMonth", {
+            type: "line",
+            data: {
+                labels: months,
+                datasets: [{
+                    borderColor: 'red',
+                    data: delayedCount
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Delayed Flights By Month"
+                }
+            }
+        });
+
+        //barplot delayed by airlines
+        const airlines = ['WN', 'AA', 'UA', 'MQ', 'DL']
+
+       const delayedByAirlinesCount = [117195,72843,46847,44592,41296]
+        
+        const airlineColors = ["red", "green", "blue", "orange", "brown"];
+
+        new Chart("delayedByAirlines", {
+            type: "bar",
+            data: {
+                labels: airlines,
+                datasets: [{
+                    backgroundColor: airlineColors,
+                    data:delayedByAirlinesCount 
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Top 5 airlines with most delayed"
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
